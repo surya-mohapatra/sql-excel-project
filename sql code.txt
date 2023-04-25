@@ -1,0 +1,159 @@
+-- table of all data from 2016-2019 of citibike ridership data
+
+WITH t1_cte AS
+(SELECT * FROM citibike_2016 
+UNION
+SELECT * FROM citibike_2017
+UNION
+SELECT * FROM citibike_2018
+UNION
+SELECT * FROM citibike_2019)
+
+-- non functional attempt at cte/subquery code
+
+WITH t1_cte AS
+(SELECT * FROM citibike_2016 
+UNION
+SELECT * FROM citibike_2017
+UNION
+SELECT * FROM citibike_2018
+UNION
+SELECT * FROM citibike_2019)
+--CTE
+SELECT ride_distance, duration, user_type, COUNT(*) as number_bike_rentals
+FROM (SELECT (stop_time - start_time) as duration, user_type,
+	  	CASE
+			WHEN duration < 10  THEN 'Short_Ride'
+			WHEN duration BETWEEN 10  AND 30 THEN 'Medium_Ride'
+			ELSE 'Long Ride'
+	    END AS ride_distance
+        FROM t1_cte) AS temp
+GROUP BY 1,2
+
+-- COUNT OF bike rentals filtered by ride_time and user_type 
+
+SELECT ride_distance, user_type, COUNT(*) as number_bike_rentals
+FROM (SELECT user_type,
+	  	CASE 
+	  		WHEN DATE_PART('minute', stop_time-start_time) < 10  THEN 'Short_Ride'
+			WHEN DATE_PART('minute', stop_time-start_time) BETWEEN 10  AND 30 THEN 'Medium_Ride'
+			ELSE 'Long Ride'
+	    END AS ride_distance
+        FROM ((SELECT * FROM citibike_2016 UNION SELECT * FROM citibike_2017 UNION SELECT * FROM citibike_2018 UNION SELECT * FROM citibike_2019) )as temp) as temp2
+GROUP BY 1,2
+
+--avg ride time
+
+SELECT 
+AVG(DATE_PART('minute', stop_time-start_time)) as avg_ride_time
+FROM
+(SELECT * FROM citibike_2016 UNION SELECT * FROM citibike_2017 UNION SELECT * FROM citibike_2018 UNION SELECT * FROM citibike_2019 )as temp
+
+--avg ride time for customer vs subscriber vs null
+
+SELECT 
+AVG(DATE_PART('minute', stop_time-start_time)) as avg_ride_time, user_type
+FROM
+(SELECT * FROM citibike_2016 UNION SELECT * FROM citibike_2017 UNION SELECT * FROM citibike_2018 UNION SELECT * FROM citibike_2019 )as temp
+GROUP BY 2
+
+--avg ride time for subscriber vs customer
+
+SELECT 
+AVG(DATE_PART('minute', stop_time-start_time)) as avg_ride_time, user_type
+FROM
+(SELECT * FROM citibike_2016 UNION SELECT * FROM citibike_2017 UNION SELECT * FROM citibike_2018 UNION SELECT * FROM citibike_2019 )as temp
+WHERE user_type IS NOT NULL
+GROUP BY 2
+
+--avg ride time and count of rentals by user_type
+
+SELECT 
+user_type, AVG(DATE_PART('minute', stop_time-start_time)) as avg_ride_time, COUNT(BIKE_ID) as num_rentals
+FROM
+(SELECT * FROM citibike_2016 UNION 
+ SELECT * FROM citibike_2017 UNION 
+ SELECT * FROM citibike_2018 UNION 
+ SELECT * FROM citibike_2019 ) as temp
+WHERE user_type IS NOT NULL
+GROUP BY 1
+
+--avg ride, num rentals grouped by gender and user type
+
+SELECT 
+user_type, AVG(DATE_PART('minute', stop_time-start_time)) as avg_ride_time, COUNT(BIKE_ID) as num_rentals, 
+CASE WHEN gender=1 THEN 'Male'
+	 WHEN gender=2 THEN 'Female'
+	 ELSE 'N/A'
+	 END AS gender_cat
+FROM
+(SELECT * FROM citibike_2016 UNION 
+ SELECT * FROM citibike_2017 UNION 
+ SELECT * FROM citibike_2018 UNION 
+ SELECT * FROM citibike_2019 ) as temp
+WHERE user_type IS NOT NULL
+GROUP BY 1,gender_cat
+
+-- avg ride time and count of bike rentals by station
+
+SELECT cbs.id, name, docks, COUNT(*) as num_rentals, AVG(DATE_PART('minute', stop_time-start_time)) as avg_ride_time
+FROM 
+(SELECT * FROM citibike_2016 UNION 
+ SELECT * FROM citibike_2017 UNION 
+ SELECT * FROM citibike_2018 UNION 
+ SELECT * FROM citibike_2019 ) as temp
+JOIN citibike_stations cbs
+ON cbs.id=temp.start_station_id
+GROUP BY  1
+ORDER BY 4 DESC
+
+--count of rentals grouped by station and time of day
+
+WITH t1_cte AS (SELECT name, docks,start_time,
+CASE 
+WHEN DATE_PART('hour',start_time)>=12 AND DATE_PART('hour',start_time)<18  THEN 'Afternoon'
+WHEN DATE_PART('hour',start_time)>=6 AND DATE_PART('hour',start_time)<12  THEN 'Morning'
+WHEN DATE_PART('hour',start_time)>=0 AND DATE_PART('hour',start_time)<6 THEN 'Night'
+ELSE 'EVENING'
+END AS time_of_day
+FROM 
+(SELECT * FROM citibike_2016 UNION 
+ SELECT * FROM citibike_2017 UNION 
+ SELECT * FROM citibike_2018 UNION 
+ SELECT * FROM citibike_2019 ) as temp
+JOIN citibike_stations cbs
+ON cbs.id=temp.start_station_id)
+SELECT name,time_of_day, COUNT(*) as count_rental
+FROM t1_cte
+GROUP BY 1,2
+ORDER BY 3 DESC
+
+--rentals by month
+
+WITH t1_cte AS (SELECT name, docks,start_time,DATE_PART('month',start_time) AS month_of_year
+FROM 
+(SELECT * FROM citibike_2016 UNION 
+ SELECT * FROM citibike_2017 UNION 
+ SELECT * FROM citibike_2018 UNION 
+ SELECT * FROM citibike_2019 ) as temp
+JOIN citibike_stations cbs
+ON cbs.id=temp.start_station_id)
+SELECT month_of_year, COUNT(*) as count_rental
+FROM t1_cte
+GROUP BY 1
+ORDER BY 2 DESC
+
+--year
+
+WITH t1_cte AS (SELECT name, docks,start_time,DATE_PART('year',start_time) AS year
+FROM 
+(SELECT * FROM citibike_2016 UNION 
+ SELECT * FROM citibike_2017 UNION 
+ SELECT * FROM citibike_2018 UNION 
+ SELECT * FROM citibike_2019 ) as temp
+JOIN citibike_stations cbs
+ON cbs.id=temp.start_station_id)
+SELECT year, COUNT(*) as count_rental
+FROM t1_cte
+GROUP BY 1
+ORDER BY 2 DESC
