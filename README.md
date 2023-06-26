@@ -24,24 +24,24 @@ Key insights that could provide value for the CITIBIKE business include:
 ![image](https://github.com/surya-mohapatra/sql-excel-project/assets/120099114/2e8a9646-7975-4f0a-aabe-3b84ab0dd1b8)
 # ANALYSIS 
 - Grove St Path dock station has the largest amount of rentals accounting for 10% of rentals from 2016-2019.
-- -Hamilton Park, Sip Ave Newport Path had the 2nd,3rd,4th highest number of bike rentals.
+- Hamilton Park, Sip Ave Newport Path had the 2nd,3rd,4th highest number of bike rentals.
 # BUSINESS INSIGHT 
 - More bike or docks could be provided at these stations.
 
 # 2.
 ![image](https://github.com/surya-mohapatra/sql-excel-project/assets/120099114/253688e9-7412-4ca3-b531-905c0182c6cb)
 # ANALYSIS
--2019 had the highest number of rentals and a upward trend of bike rentals from 2016-2019 
+- 2019 had the highest number of rentals and a upward trend of bike rentals from 2016-2019 
 # BUSINESS INSIGHT
--If this trend continues a larger number of bikes should be made available every year.
+- If this trend continues a larger number of bikes should be made available every year.
 
 # 3.
 ![image](https://github.com/surya-mohapatra/sql-excel-project/assets/120099114/754b5e53-077d-4148-9c87-2aba58020739)
 # ANALYSIS
--The highest amount of rentals occur during the fall and summer months.
--August has the highest number of bike rentals followed by September and October.
+- The highest amount of rentals occur during the fall and summer months.
+- August has the highest number of bike rentals followed by September and October.
 # BUSINESS INSIGHT
--More bikes can be introduced during these months to keep up with demand.
+- More bikes can be introduced during these months to keep up with demand.
 
 # 4.
 ![image](https://github.com/surya-mohapatra/sql-excel-project/assets/120099114/5b47dc26-d72a-405f-b288-770355f30821)
