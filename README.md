@@ -24,6 +24,7 @@ Key insights that could provide value for the CITIBIKE business include:
 - Grove St Path dock station has the largest amount of rentals accounting for 10% of rentals from 2016-2019.-Hamilton Park, Sip Ave Newport Path had the 2nd,3rd,4th highest number of bike rentals.
 # BUSINESS INSIGHT 1
 - More bike or docks could be provided at these stations.
+  
 ![image](https://github.com/surya-mohapatra/sql-excel-project/assets/120099114/2e8a9646-7975-4f0a-aabe-3b84ab0dd1b8)
 
 
