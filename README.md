@@ -1,13 +1,13 @@
 # SQL-Excel-project
 
 # Data Analysis Project using Postgresql and Excel for visualization on Citibike Data (NYC) 2016-2019
-- Data analysis and exploration done using PostgreSQL and Microsoft Excel
-- Presentation including analysis and insights linked in Powerpoint format and displayed below
-- SQL code using PostgreSQL linked in text format
-- Excel workbook with visualizations link provided
+- Data analysis and exploration done using PostgreSQL and Microsoft Excel.
+- Presentation including analysis and insights linked in Powerpoint format and displayed below.
+- SQL code using PostgreSQL linked in text format.
+- Excel workbook with visualizations link provided.
  
 # Citibike dataset
-- Collection of bike rental data from 2016 to 2019 in NYC 
+- Collection of bike rental data from 2016 to 2019 in NYC.
 - 5 Tables were used in this analysis including yearly data of bike rentals from 2016 to 2019 and a reference table of the bike rental station including the number of bike docks.
  
 # Data Dictionary
@@ -78,7 +78,7 @@ Key insights that could provide value for the CITIBIKE business include:
 - A long ride is greater than 30 minutes, medium between 10 and 30 minutes and short ride is less than 10 minutes.
 - Most bike rentals are under 10 minutes with significantly fewer that are medium rides and large rides.
 # BUSINESS INSIGHT
-- Since longer rides are less frequent bikes can be designed for shorter use periods.
+- Since longer rides are less frequent, bikes can be designed for shorter use periods.
 - E-Bikes could be a good for shorter rides as it is less prone to low battery levels compared to longer rides.
 
 # 9.
